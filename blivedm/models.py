@@ -43,6 +43,7 @@ class DanmakuMessage:
     :param font_size: 字体尺寸
     :param color: 颜色
     :param timestamp: 时间戳（毫秒）
+    :send_time: 时间(时间戳转换出来的)
     :param rnd: 随机数，前端叫作弹幕ID，可能是去重用的
     :param uid_crc32: 用户ID文本的CRC32
     :param msg_type: 是否礼物弹幕（节奏风暴）
@@ -86,6 +87,7 @@ class DanmakuMessage:
         font_size: int = None,
         color: int = None,
         timestamp: int = None,
+        send_time:str=None,
         rnd: int = None,
         uid_crc32: str = None,
         msg_type: int = None,
@@ -126,6 +128,7 @@ class DanmakuMessage:
         self.font_size: int = font_size
         self.color: int = color
         self.timestamp: int = timestamp
+        self.send_time:str=send_time
         self.rnd: int = rnd
         self.uid_crc32: str = uid_crc32
         self.msg_type: int = msg_type
@@ -184,6 +187,7 @@ class DanmakuMessage:
             font_size=info[0][2],
             color=info[0][3],
             timestamp=info[0][4],
+            send_time = datetime.datetime.fromtimestamp(info[0][4]/1000).strftime("%Y-%m-%d %H:%M:%S.%f"),
             rnd=info[0][5],
             uid_crc32=info[0][7],
             msg_type=info[0][9],
@@ -264,6 +268,7 @@ class GiftMessage:
     :param guard_level: 舰队等级，0非舰队，1总督，2提督，3舰长
     :param uid: 用户ID
     :param timestamp: 时间戳
+    :send_time: 时间(时间戳转换)
     :param gift_id: 礼物ID
     :param gift_type: 礼物类型（未知）
     :param action: 目前遇到的有'喂食'、'赠送'
@@ -283,6 +288,7 @@ class GiftMessage:
         guard_level: int = None,
         uid: int = None,
         timestamp: int = None,
+        send_time:str=None,
         gift_id: int = None,
         gift_type: int = None,
         action: str = None,
@@ -299,6 +305,7 @@ class GiftMessage:
         self.guard_level = guard_level
         self.uid = uid
         self.timestamp = timestamp
+        self.send_time=send_time
         self.gift_id = gift_id
         self.gift_type = gift_type
         self.action = action
@@ -318,6 +325,7 @@ class GiftMessage:
             guard_level=data['guard_level'],
             uid=data['uid'],
             timestamp=data['timestamp'],
+            send_time = datetime.datetime.fromtimestamp(data['timestamp']).strftime("%Y-%m-%d %H:%M:%S"),
             gift_id=data['giftId'],
             gift_type=data['giftType'],
             action=data['action'],
@@ -341,6 +349,7 @@ class GuardBuyMessage:
     :param gift_id: 礼物ID
     :param gift_name: 礼物名
     :param start_time: 开始时间戳，和结束时间戳相同
+    :send_time: 时间(开始时间戳转换)
     :param end_time: 结束时间戳，和开始时间戳相同
     """
 
@@ -354,6 +363,7 @@ class GuardBuyMessage:
         gift_id: int = None,
         gift_name: str = None,
         start_time: int = None,
+        send_time: str= None,
         end_time: int = None,
     ):
         self.uid: int = uid
@@ -364,6 +374,7 @@ class GuardBuyMessage:
         self.gift_id: int = gift_id
         self.gift_name: str = gift_name
         self.start_time: int = start_time
+        self.send_time:str=send_time
         self.end_time: int = end_time
 
     @classmethod
@@ -377,6 +388,7 @@ class GuardBuyMessage:
             gift_id=data['gift_id'],
             gift_name=data['gift_name'],
             start_time=data['start_time'],
+            send_time = datetime.datetime.fromtimestamp(data['start_time']).strftime("%Y-%m-%d %H:%M:%S"),
             end_time=data['end_time'],
         )
 
@@ -389,6 +401,7 @@ class SuperChatMessage:
     :param message: 消息
     :param message_trans: 消息日文翻译（目前只出现在SUPER_CHAT_MESSAGE_JPN）
     :param start_time: 开始时间戳
+    :send_time: 时间(开始时间戳转换)
     :param end_time: 结束时间戳
     :param time: 剩余时间（约等于 结束时间戳 - 开始时间戳）
     :param id_: str，醒目留言ID，删除时用
@@ -412,6 +425,7 @@ class SuperChatMessage:
         message: str = None,
         message_trans: str = None,
         start_time: int = None,
+        send_time:str =None,
         end_time: int = None,
         time: int = None,
         id_: int = None,
@@ -432,6 +446,7 @@ class SuperChatMessage:
         self.message: str = message
         self.message_trans: str = message_trans
         self.start_time: int = start_time
+        self.send_time:str=send_time
         self.end_time: int = end_time
         self.time: int = time
         self.id: int = id_
@@ -455,6 +470,7 @@ class SuperChatMessage:
             message=data['message'],
             message_trans=data['message_trans'],
             start_time=data['start_time'],
+            send_time = datetime.datetime.fromtimestamp(data['start_time']).strftime("%Y-%m-%d %H:%M:%S"),
             end_time=data['end_time'],
             time=data['time'],
             id_=data['id'],

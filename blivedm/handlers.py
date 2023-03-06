@@ -37,6 +37,9 @@ IGNORED_CMDS = (
     'STOP_LIVE_ROOM_LIST',
     'SUPER_CHAT_MESSAGE_JPN',
     'WIDGET_BANNER',
+    'RECOMMEND_CARD',
+    'LIKE_INFO_V3_CLICK',
+    'GOTO_BUY_FLOW',
 )
 
 # 已打日志的未知cmd

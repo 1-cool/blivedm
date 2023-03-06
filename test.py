@@ -4,13 +4,12 @@ import random
 
 import blivedm
 
-import datetime
 
 # 直播间ID的取值看直播间URL
 TEST_ROOM_IDS = [
-    22389206,
-    21728563,
-    22301377
+    26543891,
+    24697117,
+    26874853
 ]
 
 #文字颜色
@@ -82,26 +81,27 @@ class MyHandler(blivedm.BaseHandler):
     #     print(f'[{client.room_id}] 当前人气值：{message.popularity}')
 
 
-    # async def _on_danmaku(self, client: blivedm.BLiveClient, message: blivedm.DanmakuMessage):
-    #     print(f'[{client.room_id}] {message.uname}：{message.msg}')
-    #     send_time = datetime.datetime.fromtimestamp(message.timestamp/1000).strftime("%Y-%m-%d %H:%M:%S.%f")
-    #     print(f'[{send_time}]\t{message.uname}：{message.msg}')
+    #弹幕显示
+    async def _on_danmaku(self, client: blivedm.BLiveClient, message: blivedm.DanmakuMessage):
+        # print(f'[{client.room_id}] {message.uname}：{message.msg}')
+        print(f'[{client.room_id} {message.send_time}]\t{message.uname}：{message.msg}')
 
-    # async def _on_gift(self, client: blivedm.BLiveClient, message: blivedm.GiftMessage):
-    #     send_time = datetime.datetime.fromtimestamp(message.timestamp/1000).strftime("%Y-%m-%d %H:%M:%S.%f")
-    #     print(f'[{send_time}] {message.uname} 赠送{message.gift_name}x{message.num}'
-    #           f' （{message.coin_type}瓜子x{message.total_coin}）')
+    #礼物显示
+    async def _on_gift(self, client: blivedm.BLiveClient, message: blivedm.GiftMessage):
+        print(f'[{client.room_id} {message.send_time}] {message.uname} 赠送{message.gift_name}x{message.num}'
+              f' （{message.coin_type}瓜子x{message.total_coin}）')
 
-    # async def _on_buy_guard(self, client: blivedm.BLiveClient, message: blivedm.GuardBuyMessage):
-    #     send_time = datetime.datetime.fromtimestamp(message.start_time/1000).strftime("%Y-%m-%d %H:%M:%S.%f")
-    #     print(f'[{send_time}] {message.username} 购买{message.gift_name}')
+    #舰长
+    async def _on_buy_guard(self, client: blivedm.BLiveClient, message: blivedm.GuardBuyMessage):
+        print(f'[{client.room_id} {message.send_time}] {message.username} 购买{message.gift_name}')
 
-    # async def _on_super_chat(self, client: blivedm.BLiveClient, message: blivedm.SuperChatMessage):
-    #     send_time = datetime.datetime.fromtimestamp(message.start_time/1000).strftime("%Y-%m-%d %H:%M:%S.%f")
-    #     print(f'[{send_time}] 醒目留言 ¥{message.price} {message.uname}：{message.message}')
+    #SC
+    async def _on_super_chat(self, client: blivedm.BLiveClient, message: blivedm.SuperChatMessage):
+        print(f'[{client.room_id} {message.send_time}] 醒目留言 ¥{message.price} {message.uname}：{message.message}')
 
-    async def _on_interact_word_callback(self, client: blivedm.BLiveClient, message: blivedm.interact_word):
-        print(f"[{green}{client.room_id} {message.send_time}{none}] {message.uname}\t进入直播间")
+    #进入直播间
+    # async def _on_interact_word_callback(self, client: blivedm.BLiveClient, message: blivedm.interact_word):
+    #     print(f"[{green}{client.room_id} {message.send_time}{none}] {message.uname}\t进入直播间")
 
 
 if __name__ == '__main__':
