@@ -2,6 +2,8 @@
 import json
 from typing import *
 
+import datetime
+
 __all__ = (
     'HeartbeatMessage',
     'DanmakuMessage',
@@ -9,6 +11,7 @@ __all__ = (
     'GuardBuyMessage',
     'SuperChatMessage',
     'SuperChatDeleteMessage',
+    'interact_word'
 )
 
 
@@ -487,4 +490,31 @@ class SuperChatDeleteMessage:
     def from_command(cls, data: dict):
         return cls(
             ids=data['ids'],
+        )
+
+
+class interact_word:
+    """
+    进入直播间
+
+    :param uname: 用户名
+    :param timestamp: 时间戳
+    """
+
+    def __init__(
+        self,
+        uname: str = None,
+        timestamp:int=None,
+        send_time:str=None
+    ):
+        self.uname: str = uname
+        self.timestamp:int=timestamp
+        self.send_time:str=send_time
+
+    @classmethod
+    def from_command(cls, data: dict):
+        return cls(
+            uname=data['uname'],
+            timestamp=data['timestamp'],
+            send_time=datetime.datetime.fromtimestamp(data['timestamp']).strftime("%Y-%m-%d %H:%M:%S")
         )

@@ -18,7 +18,7 @@ IGNORED_CMDS = (
     'ENTRY_EFFECT',
     'HOT_RANK_CHANGED',
     'HOT_RANK_CHANGED_V2',
-    'INTERACT_WORD',
+    # 'INTERACT_WORD',
     'LIVE',
     'LIVE_INTERACTIVE_GAME',
     'NOTICE_MSG',
@@ -74,6 +74,9 @@ class BaseHandler(HandlerInterface):
 
     def __super_chat_message_delete_callback(self, client: client_.BLiveClient, command: dict):
         return self._on_super_chat_delete(client, models.SuperChatDeleteMessage.from_command(command['data']))
+    
+    def __interact_word_callback(self, client: client_.BLiveClient, command: dict):
+        return self._on_interact_word_callback(client, models.interact_word.from_command(command['data']))
 
     # cmd -> 处理回调
     _CMD_CALLBACK_DICT: Dict[
@@ -96,6 +99,8 @@ class BaseHandler(HandlerInterface):
         'SUPER_CHAT_MESSAGE': __super_chat_message_callback,
         # 删除醒目留言
         'SUPER_CHAT_MESSAGE_DELETE': __super_chat_message_delete_callback,
+        #进入直播间
+        'INTERACT_WORD':__interact_word_callback
     }
     # 忽略其他常见cmd
     for cmd in IGNORED_CMDS:
@@ -147,4 +152,9 @@ class BaseHandler(HandlerInterface):
     async def _on_super_chat_delete(self, client: client_.BLiveClient, message: models.SuperChatDeleteMessage):
         """
         删除醒目留言
+        """
+
+    async def _on_interact_word_callback(self, client: client_.BLiveClient, message: models.interact_word):
+        """
+        进入直播间
         """
