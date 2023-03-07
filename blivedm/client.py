@@ -130,6 +130,8 @@ class BLiveClient:
         self._room_short_id = None
         # 主播用户ID
         self._room_owner_uid = None
+        # 主播用户名
+        self._room_owner_uname=None
         # 弹幕服务器列表
         # [{host: "tx-bj4-live-comet-04.chat.bilibili.com", port: 2243, wss_port: 443, ws_port: 2244}, ...]
         self._host_server_list: Optional[List[dict]] = None
@@ -171,6 +173,13 @@ class BLiveClient:
         主播用户ID，调用init_room后初始化
         """
         return self._room_owner_uid
+    
+    @property
+    def room_owner_uname(self) -> Optional[int]:
+        """
+        主播用户名，调用init_room后初始化
+        """
+        return self._room_owner_uname
 
     def add_handler(self, handler: 'handlers.HandlerInterface'):
         """
@@ -256,6 +265,7 @@ class BLiveClient:
             # 失败了则降级
             self._room_id = self._room_short_id = self._tmp_room_id
             self._room_owner_uid = 0
+            self._room_owner_uname = None
 
         if not await self._init_host_server():
             res = False
@@ -294,10 +304,14 @@ class BLiveClient:
         return True
 
     def _parse_room_init(self, data):
+        # f=open("data.txt","w+")
+        # f.write(str(data))
+        # f.close
         room_info = data['room_info']
         self._room_id = room_info['room_id']
         self._room_short_id = room_info['short_id']
         self._room_owner_uid = room_info['uid']
+        self._room_owner_uname = data['anchor_info']['base_info']['uname']
         return True
 
     async def _init_host_server(self):
