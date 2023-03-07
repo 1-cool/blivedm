@@ -43,6 +43,7 @@ IGNORED_CMDS = (
     'AREA_RANK_CHANGED',
     'COMMON_NOTICE_DANMAKU',
     'LIKE_INFO_V3_UPDATE',
+    'WATCHED_CHANGE',
 )
 
 # 已打日志的未知cmd
