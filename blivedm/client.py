@@ -304,9 +304,8 @@ class BLiveClient:
         return True
 
     def _parse_room_init(self, data):
-        # f=open("data.txt","w+")
-        # f.write(str(data))
-        # f.close
+        # with open("data.txt","w+",encoding="UTF-8") as f:
+        #     json.dump(data,f,ensure_ascii=False)
         room_info = data['room_info']
         self._room_id = room_info['room_id']
         self._room_short_id = room_info['short_id']

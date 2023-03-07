@@ -12,6 +12,7 @@ TEST_ROOM_IDS = [
     26874853,
     22746343,
     23553760,
+    22262300,
 ]
 
 #文字颜色
@@ -90,20 +91,20 @@ class MyHandler(blivedm.BaseHandler):
 
     #礼物显示
     async def _on_gift(self, client: blivedm.BLiveClient, message: blivedm.GiftMessage):
-        print(f'[{client.room_owner_uname} {message.send_time}] {message.uname} 赠送{message.gift_name}x{message.num}'
-              f' （{message.coin_type}瓜子x{message.total_coin}）')
+        print(f'{green}[{client.room_owner_uname} {message.send_time}] {message.uname} 赠送{message.gift_name}x{message.num}'
+              f' （{message.coin_type}瓜子x{message.total_coin}）{none}')
 
     #舰长
     async def _on_buy_guard(self, client: blivedm.BLiveClient, message: blivedm.GuardBuyMessage):
-        print(f'[{client.room_owner_uname} {message.send_time}] {message.username} 购买{message.gift_name}')
+        print(f'{yellow}[{client.room_owner_uname} {message.send_time}] {message.username} 购买{message.gift_name}{none}')
 
     #SC
     async def _on_super_chat(self, client: blivedm.BLiveClient, message: blivedm.SuperChatMessage):
         print(f'[{client.room_owner_uname} {message.send_time}] 醒目留言 ¥{message.price} {message.uname}：{message.message}')
 
     #进入直播间
-    # async def _on_interact_word_callback(self, client: blivedm.BLiveClient, message: blivedm.interact_word):
-    #     print(f"[{green}{client.room_id} {message.send_time}{none}] {message.uname}\t进入直播间")
+    async def _on_interact_word_callback(self, client: blivedm.BLiveClient, message: blivedm.interact_word):
+        print(f"[{client.room_owner_uname} {message.send_time}] {message.uname}\t进入直播间")
 
 
 if __name__ == '__main__':

@@ -40,6 +40,9 @@ IGNORED_CMDS = (
     'RECOMMEND_CARD',
     'LIKE_INFO_V3_CLICK',
     'GOTO_BUY_FLOW',
+    'AREA_RANK_CHANGED',
+    'COMMON_NOTICE_DANMAKU',
+    'LIKE_INFO_V3_UPDATE',
 )
 
 # 已打日志的未知cmd
@@ -119,7 +122,7 @@ class BaseHandler(HandlerInterface):
         if cmd not in self._CMD_CALLBACK_DICT:
             # 只有第一次遇到未知cmd时打日志
             if cmd not in logged_unknown_cmds:
-                logger.warning('room=%d unknown cmd=%s, command=%s', client.room_id, cmd, command)
+                logger.warning('%s room=%d unknown cmd=%s, command=%s',client.room_owner_uname, client.room_id, cmd, command)
                 logged_unknown_cmds.add(cmd)
             return
 
