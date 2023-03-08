@@ -81,7 +81,7 @@ class MyHandler(blivedm.BaseHandler):
     # _CMD_CALLBACK_DICT['INTERACT_WORD'] = __interact_word_callback  # noqa
 
     # async def _on_heartbeat(self, client: blivedm.BLiveClient, message: blivedm.HeartbeatMessage):
-    #     print(f'[{client.room_id}] 当前人气值：{message.popularity}')
+    #     print(f'[{client.room_owner_uname}] 当前人气值：{message.popularity}')
 
 
     #弹幕显示
